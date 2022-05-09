@@ -37,7 +37,7 @@ const Welcome = () => {
             rel="noopener noreferrer"
             target="__blank"
           >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
+            <FormattedMessage id="pages.welcome.link" defaultMessage="Index" />
           </a>
         </Typography.Text>
         <CodePreview>yarn add @ant-design/pro-table</CodePreview>
@@ -53,7 +53,7 @@ const Welcome = () => {
             rel="noopener noreferrer"
             target="__blank"
           >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
+            <FormattedMessage id="pages.welcome.link" defaultMessage="Index" />
           </a>
         </Typography.Text>
         <CodePreview>yarn add @ant-design/pro-layout</CodePreview>

@@ -1,51 +1,41 @@
 export default [
   {
-    path: '/user',
+    name: 'login',
     layout: false,
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './user/Login',
-      },
-      {
-        component: './404',
-      },
-    ],
+    path: '/user/login',
+    component: './Login',
   },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
+    path: '/admin/home',
+    name: 'home',
+    icon: 'dashboard',
+    component: './Home',
   },
   {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
-    routes: [
+    path: '/admin/manage',
+    name: 'manage',
+    icon: 'form',
+    routes:[
       {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
+        path: '/admin/manage/article',
+        name: '文章管理',
+        component: './ArticleManage/Article',
       },
       {
-        component: './404',
+        path: '/admin/manage/category',
+        name: '分类管理',
+        component: './ArticleManage/Category',
       },
-    ],
-  },
-  {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
+      {
+        path: '/admin/manage/tag',
+        name: '标签管理',
+        component: './ArticleManage/Tag',
+      },
+    ]
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/admin/home',
   },
   {
     component: './404',
