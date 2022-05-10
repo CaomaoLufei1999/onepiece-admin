@@ -6,6 +6,9 @@ import { SearchOutlined } from '@ant-design/icons';
 import AlgoList from '@/pages/ProgramManage/Algo/AlgoList';
 import AddAlgo from "@/pages/ProgramManage/Algo/AddAlgo";
 import AlgoTag from "@/pages/ProgramManage/Algo/AlgoTag";
+import SQLList from "@/pages/ProgramManage/SQL/SQLList";
+import AddSQL from "@/pages/ProgramManage/SQL/AddSQL";
+import SQLTag from "@/pages/ProgramManage/SQL/SQLTag";
 
 const { Option } = Select;
 
@@ -20,7 +23,7 @@ const AlgoManage = () => {
         type: 'card',
       }}
     >
-      <ProCard.TabPane key="tab1" tab="算法题列表">
+      <ProCard.TabPane key="tab1" tab="SQL题列表">
         <ProCard
           title={
             <Row gutter={24}>
@@ -33,24 +36,24 @@ const AlgoManage = () => {
                 </Select>
               </Col>
               <Col lg={8}>
-                算法标签: &nbsp;
+                题目标签: &nbsp;
                 <Select
-                  defaultValue="动态规划"
+                  defaultValue="联表查询"
                   onChange={handleChange}
                   bordered={false}
                   mode="multiple"
                 >
-                  <Option value="动态规划">动态规划</Option>
-                  <Option value="回溯">回溯</Option>
-                  <Option value="递归">递归</Option>
-                  <Option value="二叉树">二叉树</Option>
-                  <Option value="链表">链表</Option>
-                  <Option value="排序">排序</Option>
+                  <Option value="联表查询">联表查询</Option>
+                  <Option value="外连接">外连接</Option>
+                  <Option value="内连接">内连接</Option>
+                  <Option value="分组查询">分组查询</Option>
+                  <Option value="左连接">左连接</Option>
+                  <Option value="右连接">右连接</Option>
                 </Select>
               </Col>
               <Col lg={8}>
-                算法题目: &nbsp;
-                <Input style={{ width: '60%' }} placeholder="请输入算法标题..." bordered={false} />
+                SQL题目: &nbsp;
+                <Input style={{ width: '60%' }} placeholder="请输入SQL标题..." bordered={false} />
               </Col>
             </Row>
           }
@@ -60,14 +63,14 @@ const AlgoManage = () => {
             </Button>
           }
         >
-          <AlgoList />
+          <SQLList />
         </ProCard>
       </ProCard.TabPane>
-      <ProCard.TabPane key="tab2" tab="算法题导入">
-        <AddAlgo/>
+      <ProCard.TabPane key="tab2" tab="SQL题导入">
+        <AddSQL/>
       </ProCard.TabPane>
-      <ProCard.TabPane key="tab3" tab="新增算法标签">
-        <AlgoTag />
+      <ProCard.TabPane key="tab3" tab="新增SQL题标签">
+        <SQLTag />
       </ProCard.TabPane>
       <ProCard.TabPane key="tab4" tab="数据分析看板">
         敬请期待...

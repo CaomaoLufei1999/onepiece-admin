@@ -46,7 +46,7 @@ export default [
       {
         path: '/admin/program/sql',
         name: 'SQL题管理',
-        component: './ProgramManage/Algo',
+        component: './ProgramManage/SQL',
       },
     ],
   },
