@@ -15,7 +15,7 @@ export default [
     path: '/admin/manage',
     name: 'manage',
     icon: 'form',
-    routes:[
+    routes: [
       {
         path: '/admin/manage/article',
         name: '文章管理',
@@ -31,7 +31,24 @@ export default [
         name: '标签管理',
         component: './ArticleManage/Tag',
       },
-    ]
+    ],
+  },
+  {
+    path: '/admin/program',
+    name: 'program',
+    icon: 'code',
+    routes: [
+      {
+        path: '/admin/program/algo',
+        name: '算法题管理',
+        component: './ProgramManage/Algo',
+      },
+      {
+        path: '/admin/program/sql',
+        name: 'SQL题管理',
+        component: './ProgramManage/Algo',
+      },
+    ],
   },
   {
     path: '/',
