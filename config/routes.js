@@ -11,6 +11,7 @@ export default [
     icon: 'dashboard',
     component: './Home',
   },
+
   {
     path: '/admin/manage',
     name: 'manage',
@@ -47,6 +48,35 @@ export default [
         path: '/admin/program/sql',
         name: 'SQL题管理',
         component: './ProgramManage/SQL',
+      },
+    ],
+  },
+  {
+    path: '/admin/public',
+    name: 'public',
+    icon: 'sound',
+    component: './Public',
+
+  },
+  {
+    path: '/admin/community',
+    name: 'community',
+    icon: 'cluster',
+    routes: [
+      {
+        path: '/admin/community/message2all',
+        name: '消息群发',
+        component: './BatchMessage/Message2All',
+      },
+      {
+        path: '/admin/community/email2all',
+        name: '邮件群发',
+        component: './BatchMessage/Email2All',
+      },
+      {
+        path: '/admin/community/shortmessage2all',
+        name: '短信群发',
+        component: './BatchMessage/ShortMessage2All',
       },
     ],
   },
