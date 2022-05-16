@@ -2,6 +2,8 @@ export default [
   {
     name: 'login',
     layout: false,
+    menuRender: false,
+    hideInMenu:true,
     path: '/user/login',
     component: './Login',
   },
@@ -59,6 +61,12 @@ export default [
 
   },
   {
+    path: '/admin/book',
+    name: 'book',
+    icon: 'read',
+    component: './Public',
+  },
+  {
     path: '/admin/community',
     name: 'community',
     icon: 'cluster',
@@ -79,6 +87,46 @@ export default [
         component: './BatchMessage/ShortMessage2All',
       },
     ],
+  },
+  {
+    path: '/admin/users',
+    name: 'users',
+    icon: 'team',
+    routes: [
+      {
+        path: '/admin/users/list',
+        name: '用户列表',
+        component: './BatchMessage/Message2All',
+      },
+      {
+        path: '/admin/users/logs',
+        name: '登录日志',
+        component: './BatchMessage/Email2All',
+      },
+    ],
+  },
+  {
+    path: '/admin/system',
+    name: 'system',
+    icon: 'rise',
+    routes: [
+      {
+        path: '/admin/system/server',
+        name: '服务监控',
+        component: './BatchMessage/Message2All',
+      },
+      {
+        path: '/admin/system/cache',
+        name: '缓存监控',
+        component: './BatchMessage/Email2All',
+      },
+    ],
+  },
+  {
+    path: '/admin/bbs',
+    name: 'bbs',
+    icon: 'laptop',
+    component: './Public',
   },
   {
     path: '/',
