@@ -3,7 +3,7 @@ export default [
     name: 'login',
     layout: false,
     menuRender: false,
-    hideInMenu:true,
+    hideInMenu: true,
     path: '/user/login',
     component: './Login',
   },
@@ -58,7 +58,6 @@ export default [
     name: 'public',
     icon: 'sound',
     component: './Public',
-
   },
   {
     path: '/admin/book',
@@ -96,12 +95,12 @@ export default [
       {
         path: '/admin/users/list',
         name: '用户列表',
-        component: './BatchMessage/Message2All',
+        component: './Users',
       },
       {
         path: '/admin/users/logs',
         name: '登录日志',
-        component: './BatchMessage/Email2All',
+        component: './Users',
       },
     ],
   },
@@ -113,12 +112,12 @@ export default [
       {
         path: '/admin/system/server',
         name: '服务监控',
-        component: './BatchMessage/Message2All',
+        component: './Monitor',
       },
       {
         path: '/admin/system/cache',
         name: '缓存监控',
-        component: './BatchMessage/Email2All',
+        component: './Monitor/CACHE',
       },
     ],
   },
@@ -126,7 +125,7 @@ export default [
     path: '/admin/bbs',
     name: 'bbs',
     icon: 'laptop',
-    component: './Public',
+    component: './BBS',
   },
   {
     path: '/',
