@@ -63,7 +63,7 @@ export default [
     path: '/admin/book',
     name: 'book',
     icon: 'read',
-    component: './Public',
+    component: './Book',
   },
   {
     path: '/admin/community',
