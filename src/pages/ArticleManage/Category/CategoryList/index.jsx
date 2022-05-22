@@ -133,6 +133,7 @@ export default () => {
             <Button type={"primary"} onClick={() => {
               setVisible(true);
             }}>修 改</Button>
+            <Button type={"primary"} danger={true}>删 除</Button>
           </Space>
         </a>)
     },
