@@ -4,6 +4,7 @@
   "private": true,
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
+    "fix-memory-limit": "cross-env LIMIT=2048 increase-memory-limit",
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
     "deploy": "npm run build && npm run gh-pages",
