@@ -14,7 +14,7 @@ const TagManage = () => {
     <ProCard
       title={'标签管理'}
       extra={
-        <Button type={"primary"} onClick={() => {
+        <Button type={"primary"} key={"add"} onClick={() => {
           setVisible(true);
         }}>新增标签</Button>
       }

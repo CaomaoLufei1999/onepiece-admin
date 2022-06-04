@@ -15,8 +15,7 @@ export const initialStateConfig = {
 };
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
- * */
-
+ */
 export async function getInitialState() {
   const fetchUserInfo = async () => {
     try {
@@ -30,6 +29,7 @@ export async function getInitialState() {
   }; // 如果不是登录页面，执行
 
   if (history.location.pathname !== loginPath) {
+    // 获取登录用户基本信息
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,

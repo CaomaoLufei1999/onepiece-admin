@@ -17,7 +17,7 @@ const ArticleManage = () => {
         type: 'card',
       }}
     >
-      <ProCard.TabPane key="tab1" tab="文章列表">
+      <ProCard.TabPane key="article_list" tab="文章列表">
         <ProCard
           title={
             <Row gutter={24}>
@@ -44,11 +44,11 @@ const ArticleManage = () => {
               </Col>
               <Col lg={6}>
                 文章标题: &nbsp;
-                <Input style={{ width: '60%' }} placeholder="请输入文章标题..." bordered={false} />
+                <Input key={"articleName"} style={{ width: '60%' }} placeholder="请输入文章标题..." bordered={false} />
               </Col>
               <Col lg={6}>
                 作者名称: &nbsp;
-                <Input style={{ width: '60%' }} placeholder="请输入作者名称..." bordered={false} />
+                <Input key={"author"} style={{ width: '60%' }} placeholder="请输入作者名称..." bordered={false} />
               </Col>
             </Row>
           }

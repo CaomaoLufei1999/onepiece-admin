@@ -1,18 +1,18 @@
 import {
-  AlipayCircleOutlined,
   LockOutlined,
   MobileOutlined,
-  TaobaoCircleOutlined,
   UserOutlined,
-  WeiboCircleOutlined,
 } from '@ant-design/icons';
-import { Alert, message, Tabs } from 'antd';
+import {Alert, message, Modal, Tabs} from 'antd';
 import React, { useState } from 'react';
 import { ProFormCaptcha, ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
+import Marquee from 'react-fast-marquee';
 import { useIntl, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { getQrcodeTicket,getQQLoginUrl } from '@/services/onepiece/onepiece-server';
+
 import styles from './index.less';
 
 const LoginMessage = ({ content }) => (
@@ -26,15 +26,29 @@ const LoginMessage = ({ content }) => (
   />
 );
 
+const qrcodeTicket = await getQrcodeTicket({});
+const qqLoginUrl = await getQQLoginUrl({});
+
 const Login = () => {
   const [userLoginState, setUserLoginState] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [type, setType] = useState('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const intl = useIntl();
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
-
     if (userInfo) {
       await setInitialState((s) => ({ ...s, currentUser: userInfo }));
     }
@@ -53,7 +67,6 @@ const Login = () => {
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         /** 此方法会跳转到 redirect 参数所在的位置 */
-
         if (!history) return;
         const { query } = history.location;
         const { redirect } = query;
@@ -76,13 +89,21 @@ const Login = () => {
   const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
+      <Alert
+        banner
+        message={
+          <Marquee pauseOnHover gradient={false}>
+            优先推荐大家使用QQ扫码授权登录（也可以使用微信公众号授权），QQ登录自动授权注册之后，可以在个人设置页绑定自己的手机号和账号密码，之后方可通过账号密码或者手机短信认证的方式进行登录！
+          </Marquee>
+        }
+      />
       <div className={styles.lang} data-lang>
         {SelectLang && <SelectLang />}
       </div>
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
+          title="OnePiece社区后台"
           subTitle={intl.formatMessage({
             id: 'pages.layouts.userLayout.title',
           })}
@@ -95,9 +116,10 @@ const Login = () => {
               id="pages.login.loginWith"
               defaultMessage="其他登录方式"
             />,
-            <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.icon} />,
-            <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.icon} />,
-            <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.icon} />,
+            <a key={"wechat"} style={{marginLeft:5,marginRight:5}}>
+              <img src={"https://open.weixin.qq.com/zh_CN/htmledition/res/assets/res-design-download/icon24_appwx_logo.png"} onClick={showModal} />
+            </a>,
+            <a href={qqLoginUrl} key={"qq"}><img src={"https://wiki.connect.qq.com/wp-content/uploads/2021/01/bt_white_24X24.png"} /></a>,
           ]}
           onFinish={async (values) => {
             await handleSubmit(values);
@@ -279,6 +301,10 @@ const Login = () => {
             </a>
           </div>
         </LoginForm>
+        <Modal title="请使用微信扫码，并关注公众号登录" visible={isModalVisible}
+               onOk={handleOk} onCancel={handleCancel} footer={null} style={{textAlign:"center"}}>
+          <img src={"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + qrcodeTicket.ticket}/>
+        </Modal>
       </div>
       <Footer />
     </div>

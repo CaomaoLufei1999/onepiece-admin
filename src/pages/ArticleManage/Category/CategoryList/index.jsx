@@ -1,9 +1,14 @@
-import {Table, Tag, Space, Dropdown, Menu, Button, Modal, Form, Input, Radio, Alert, Row, Col} from 'antd';
+import {Table, Tag, Space, Button, Modal, Form, Input, Radio, Alert, Row, Col} from 'antd';
 import {useState} from "react";
+import { getCategoryList } from '@/services/onepiece/onepiece-server';
 
+/** 获取文章分类列表 **/
+const categoryData = await getCategoryList({});
 
+/** 文章分类列表 **/
 export default () => {
   const [visible, setVisible] = useState(false);
+
   const data = [
     {
       key: '1',
@@ -14,87 +19,32 @@ export default () => {
       total: 52,
       date: '2022-05-08',
     },
-    {
-      key: '2',
-      category: '后端',
-      description: '后端分类...',
-      tags: ['java', 'python', '其他', "javaScript", 'redis', 'mysql', 'oracle'],
-      status: '1',
-      total: 52,
-      date: '2022-05-08',
-    },
-    {
-      key: '3',
-      category: '前端',
-      description: '前端分类...',
-      status: '1',
-      total: 52,
-      tags: ['java', 'python', '其他', "javaScript", 'redis', 'mysql', 'oracle'],
-      date: '2022-05-08',
-    },
-    {
-      key: '4',
-      category: '数据库',
-      description: '数据库分类...',
-      status: '1',
-      tags: ['java', 'python', '其他', "javaScript", 'redis', 'mysql', 'oracle'],
-      total: 52,
-      date: '2022-05-08',
-    },
-    {
-      key: '5',
-      category: '算法题解',
-      description: '算法题解分类...',
-      status: '1',
-      tags: ['java', 'python', '其他', "javaScript", 'redis', 'mysql', 'oracle'],
-      total: 52,
-      date: '2022-05-08',
-    },
-    {
-      key: '61',
-      category: '学习笔记',
-      description: '学习笔记分类...',
-      status: '1',
-      tags: ['java', 'python', '其他', "javaScript", 'redis', 'mysql', 'oracle'],
-      total: 52,
-      date: '2022-05-08',
-    },
-    {
-      key: '7',
-      category: '其他',
-      description: '其他分类...',
-      status: '0',
-      tags: ['java', 'python', '其他', "javaScript", 'redis', 'mysql', 'oracle'],
-      total: 52,
-      date: '2022-05-08',
-    },
-
   ];
   const columns = [
     {
       title: '文章分类',
-      dataIndex: 'category',
-      key: 'category',
+      dataIndex: 'categoryName',
+      key: 'categoryName',
       render: category => <Tag color={"red"}>{category}</Tag>,
     },
-    {
-      title: '关联标签',
-      dataIndex: 'tags',
-      key: 'tags',
-      render: tags => (
-        <Row gutter={4}>
-          {tags.map(tag => {
-            return (
-              <Col>
-                <Tag color={"blue"} key={tag}>
-                  {tag}
-                </Tag>
-              </Col>
-            );
-          })}
-        </Row>
-      ),
-    },
+    // {
+    //   title: '关联标签',
+    //   dataIndex: 'tags',
+    //   key: 'tags',
+    //   render: tags => (
+    //     <Row gutter={4}>
+    //       {tags.map(tag => {
+    //         return (
+    //           <Col>
+    //             <Tag color={"blue"} key={tag}>
+    //               {tag}
+    //             </Tag>
+    //           </Col>
+    //         );
+    //       })}
+    //     </Row>
+    //   ),
+    // },
     {
       title: '分类介绍',
       dataIndex: 'description',
@@ -120,8 +70,8 @@ export default () => {
     },
     {
       title: '创建时间',
-      key: 'date',
-      dataIndex: 'date',
+      key: 'createTime',
+      dataIndex: 'createTime',
       render: date => <b>{date}</b>,
     },
     {
@@ -130,10 +80,10 @@ export default () => {
       render: () => (
         <a onClick={e => e.preventDefault()}>
           <Space>
-            <Button type={"primary"} onClick={() => {
+            <Button type={"primary"} key={"update"} onClick={() => {
               setVisible(true);
             }}>修 改</Button>
-            <Button type={"primary"} danger={true}>删 除</Button>
+            <Button type={"primary"} key={"delete"} danger={true}>删 除</Button>
           </Space>
         </a>)
     },
@@ -182,7 +132,7 @@ export default () => {
               },
             ]}
           >
-            <Input defaultValue="程序人生" disabled />
+            <Input defaultValue="程序人生" key={"categoryName"} disabled />
           </Form.Item>
           <Form.Item name="description" label="分类描述信息"
                      rules={[
@@ -192,12 +142,12 @@ export default () => {
                        },
                      ]}
           >
-            <Input type="textarea" defaultValue="程序人生分类描述信息..." />
+            <Input type="textarea" key={"description"} defaultValue="程序人生分类描述信息..." />
           </Form.Item>
           <Form.Item name="modifier" className="collection-create-form_last-form-item">
             <Radio.Group>
-              <Radio value="public" disabled={true}>立即生效</Radio>
-              <Radio value="private" disabled={true}>暂不生效</Radio>
+              <Radio value="public" key={"public"} disabled={true}>立即生效</Radio>
+              <Radio value="private" key={"private"} disabled={true}>暂不生效</Radio>
             </Radio.Group>
             <Alert
               style={{marginTop:15}}
@@ -212,7 +162,7 @@ export default () => {
 
   return (
     <div>
-      <Table columns={columns} dataSource={data}/>
+      <Table columns={columns} dataSource={categoryData.categoryList}/>
       <CollectionCreateForm
         visible={visible}
         onCreate={onCreate}

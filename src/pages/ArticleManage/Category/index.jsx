@@ -6,6 +6,7 @@ import React from "react";
 import CategoryList from "@/pages/ArticleManage/Category/CategoryList";
 import AddCategory from "@/pages/ArticleManage/Category/AddCategory";
 
+/** 文章分类管理 **/
 const CategoryManage = () => {
   return(
     <ProCard
@@ -13,10 +14,10 @@ const CategoryManage = () => {
         type: 'card',
       }}
     >
-      <ProCard.TabPane key="tab1" tab="分类列表">
+      <ProCard.TabPane key="categoryList" tab="分类列表">
         <CategoryList/>
       </ProCard.TabPane>
-      <ProCard.TabPane key="tab2" tab="新增分类">
+      <ProCard.TabPane key="addCategory" tab="新增分类">
         <AddCategory/>
       </ProCard.TabPane>
     </ProCard>

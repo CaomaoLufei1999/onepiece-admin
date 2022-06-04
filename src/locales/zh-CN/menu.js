@@ -1,7 +1,7 @@
 export default {
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
-  'menu.home': '首页',
+  'menu.首页': '首页',
   'menu.bbs': '灌水专区管理',
   'menu.book': '书籍管理',
   'menu.users': '用户管理',
@@ -9,7 +9,6 @@ export default {
   'menu.public': '通知公告',
   'menu.community': '社区服务',
   'menu.community.message2all': '消息群发',
-  'menu.article': '文章管理',
   'menu.program': '程序题管理',
   'menu.program.algo': '算法题管理',
   'menu.program.sql': 'SQL题管理',

@@ -178,14 +178,14 @@ const menu = (
     items={[
       {
         label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+          <a target="_blank" key={"delete"} rel="noopener noreferrer" href="https://www.antgroup.com">
             删 除
           </a>
         ),
       },
       {
         label: (
-          <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          <a target="_blank" key={"top"} rel="noopener noreferrer" href="https://www.luohanacademy.com">
             置 顶
           </a>
         ),

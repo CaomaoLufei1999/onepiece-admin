@@ -1,9 +1,9 @@
-import {Table, Tag, Space, Dropdown, Menu, Button, Modal, Form, Input, Radio, Alert, Row, Col} from 'antd';
+import {Table, Tag, Space, Button, Modal, Form, Input, Radio, Alert, Row, Col} from 'antd';
 import {useState} from "react";
-import AddTag from "@/pages/ArticleManage/Tag/AddTag";
 
 export default () => {
   const [visible, setVisible] = useState(false);
+
   const data = [
     {
       key: '1',
@@ -130,10 +130,10 @@ export default () => {
       render: () => (
         <a onClick={e => e.preventDefault()}>
           <Space>
-            <Button type={"primary"} onClick={() => {
+            <Button type={"primary"} key={"update"} onClick={() => {
               setVisible(true);
             }}>修 改</Button>
-            <Button type={"primary"} danger={true}>删 除</Button>
+            <Button type={"primary"} key={"delete"} danger={true}>删 除</Button>
           </Space>
         </a>)
     },
@@ -182,7 +182,7 @@ export default () => {
               },
             ]}
           >
-            <Input defaultValue="umijs" disabled />
+            <Input key={"tag_name"} defaultValue="umijs" disabled />
           </Form.Item>
           <Form.Item
             name="title"
@@ -194,7 +194,7 @@ export default () => {
               },
             ]}
           >
-            <Input defaultValue="前端" disabled />
+            <Input key={"category"} defaultValue="前端" disabled />
           </Form.Item>
           <Form.Item name="description" label="标签描述信息"
                      rules={[
@@ -204,12 +204,12 @@ export default () => {
                        },
                      ]}
           >
-            <Input type="textarea" defaultValue="umijs标签描述信息..." />
+            <Input type="textarea" key={"tag_description"} defaultValue="umijs标签描述信息..." />
           </Form.Item>
           <Form.Item name="modifier" className="collection-create-form_last-form-item">
-            <Radio.Group>
-              <Radio value="public" disabled={true}>立即生效</Radio>
-              <Radio value="private" disabled={true}>暂不生效</Radio>
+            <Radio.Group name={"status"}>
+              <Radio value="public" disabled={true} key={"effect"}>立即生效</Radio>
+              <Radio value="private" disabled={true} key={"un_effect"}>暂不生效</Radio>
             </Radio.Group>
             <Alert
               style={{marginTop:15}}

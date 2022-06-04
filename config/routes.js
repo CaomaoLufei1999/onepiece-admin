@@ -9,14 +9,14 @@ export default [
   },
   {
     path: '/admin/home',
-    name: 'home',
+    name: '首页',
     icon: 'dashboard',
     component: './Home',
   },
 
   {
     path: '/admin/manage',
-    name: 'manage',
+    name: '文章管理',
     icon: 'form',
     routes: [
       {
@@ -38,7 +38,7 @@ export default [
   },
   {
     path: '/admin/program',
-    name: 'program',
+    name: '程序题管理',
     icon: 'code',
     routes: [
       {
@@ -55,19 +55,19 @@ export default [
   },
   {
     path: '/admin/public',
-    name: 'public',
+    name: '通知公告',
     icon: 'sound',
     component: './Public',
   },
   {
     path: '/admin/book',
-    name: 'book',
+    name: '书籍管理',
     icon: 'read',
     component: './Book',
   },
   {
     path: '/admin/community',
-    name: 'community',
+    name: '社区服务',
     icon: 'cluster',
     routes: [
       {
@@ -89,7 +89,7 @@ export default [
   },
   {
     path: '/admin/users',
-    name: 'users',
+    name: '用户管理',
     icon: 'team',
     routes: [
       {
@@ -106,7 +106,7 @@ export default [
   },
   {
     path: '/admin/system',
-    name: 'system',
+    name: '系统监控',
     icon: 'rise',
     routes: [
       {
@@ -123,7 +123,7 @@ export default [
   },
   {
     path: '/admin/bbs',
-    name: 'bbs',
+    name: '灌水专区管理',
     icon: 'laptop',
     component: './BBS',
   },

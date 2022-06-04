@@ -6,7 +6,7 @@ const Footer = () => {
   const intl = useIntl();
   const defaultMessage = intl.formatMessage({
     id: 'app.copyright.produced',
-    defaultMessage: '蚂蚁集团体验技术部出品',
+    defaultMessage: '草帽路飞的开源项目',
   });
   const currentYear = new Date().getFullYear();
   return (
@@ -14,21 +14,21 @@ const Footer = () => {
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: 'One Piece',
+          title: 'One Piece',
+          href: 'https://gitee.com/caoshipeng/onepiece',
           blankTarget: true,
         },
         {
           key: 'github',
-          title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          title: <img src='https://gitee.com/ant-design/ant-design/widgets/widget_6.svg' alt='Fork me on Gitee'></img>,
+          href: 'https://gitee.com/caoshipeng/onepiece',
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: 'CSDN Blog',
+          title: '作者博客',
+          href: 'https://blog.csdn.net/weixin_43591980',
           blankTarget: true,
         },
       ]}

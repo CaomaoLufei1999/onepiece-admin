@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import ProCard, { StatisticCard } from '@ant-design/pro-card';
+import React, {useState} from 'react';
+import ProCard, {StatisticCard} from '@ant-design/pro-card';
 import RcResizeObserver from 'rc-resize-observer';
 import VisitorDataChart from "@/pages/Home/ArticleDataChart/VisitorDataChart";
 import ArticleDataChart from "@/pages/Home/ArticleDataOverview/ArticleDataChart";
 import ArticleDataChartByPie from "@/pages/Home/ArticleDataOverview/ArticleDataChartByPie";
 
-const { Statistic } = StatisticCard;
+const {Statistic} = StatisticCard;
 
+/** 文章数据概览 **/
 export default () => {
+  /** 控制数据卡片排列方向 **/
   const [responsive, setResponsive] = useState(false);
+  /** 根据屏幕尺寸调整卡片方向 **/
   return (<RcResizeObserver key="resize-observer" onResize={(offset) => {
     setResponsive(offset.width < 596);
   }}>

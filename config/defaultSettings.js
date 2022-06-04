@@ -7,7 +7,11 @@ const Settings = {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  // 不再使用 locales/zh-CN/menu.js
+  menu:{
+    locale: false,
+  },
+  title: 'OnePiece社区后台',
   pwa: false,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',

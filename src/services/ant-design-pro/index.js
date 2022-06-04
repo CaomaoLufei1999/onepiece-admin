@@ -5,7 +5,9 @@
 // API 唯一标识：
 import * as api from './api';
 import * as login from './login';
+import * as onepiece from '../onepiece/onepiece-server';
 export default {
   api,
   login,
+  onepiece,
 };
