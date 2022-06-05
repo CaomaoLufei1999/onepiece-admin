@@ -1,6 +1,6 @@
-import {Table, Tag, Space, Button, Modal, Form, Input, Radio, Alert, Row, Col} from 'antd';
+import {Table, Tag, Space, Button, Modal, Form, Input, Radio, Alert, Row, Col, Popconfirm} from 'antd';
 import {useState} from "react";
-import { getCategoryList } from '@/services/onepiece/onepiece-server';
+import {getCategoryList} from '@/services/onepiece/onepiece-server';
 
 /** 获取文章分类列表 **/
 const categoryData = await getCategoryList({});
@@ -8,18 +8,6 @@ const categoryData = await getCategoryList({});
 /** 文章分类列表 **/
 export default () => {
   const [visible, setVisible] = useState(false);
-
-  const data = [
-    {
-      key: '1',
-      category: '程序人生',
-      tags: ['java', 'python', '其他', "javaScript", 'redis', 'mysql', 'oracle'],
-      description: '程序人生分类...',
-      status: '0',
-      total: 52,
-      date: '2022-05-08',
-    },
-  ];
   const columns = [
     {
       title: '文章分类',
@@ -27,24 +15,22 @@ export default () => {
       key: 'categoryName',
       render: category => <Tag color={"red"}>{category}</Tag>,
     },
-    // {
-    //   title: '关联标签',
-    //   dataIndex: 'tags',
-    //   key: 'tags',
-    //   render: tags => (
-    //     <Row gutter={4}>
-    //       {tags.map(tag => {
-    //         return (
-    //           <Col>
-    //             <Tag color={"blue"} key={tag}>
-    //               {tag}
-    //             </Tag>
-    //           </Col>
-    //         );
-    //       })}
-    //     </Row>
-    //   ),
-    // },
+    {
+      title: '关联标签',
+      dataIndex: 'tagInfoList',
+      key: 'tagInfoList',
+      render: tagInfoList => (
+        <Row gutter={4}>
+          {tagInfoList.map(tag => {
+            return (
+                <Tag color={"blue"} key={tag.tagId} >
+                  {tag.tagName}
+                </Tag>
+            );
+          })}
+        </Row>
+      ),
+    },
     {
       title: '分类介绍',
       dataIndex: 'description',
@@ -63,7 +49,7 @@ export default () => {
       render: status => (
         <>
           {
-            status === '1' ? <Tag color={"green"}>已生效</Tag> : <Tag color={"gray"}>未生效</Tag>
+            status === 1 ? <Tag color={"green"}>已生效</Tag> : <Tag color={"gray"}>未生效</Tag>
           }
         </>
       )
@@ -77,17 +63,25 @@ export default () => {
     {
       title: '操作',
       key: 'action',
-      render: () => (
+      render: (_, record) => (
         <a onClick={e => e.preventDefault()}>
           <Space>
             <Button type={"primary"} key={"update"} onClick={() => {
               setVisible(true);
             }}>修 改</Button>
-            <Button type={"primary"} key={"delete"} danger={true}>删 除</Button>
+            <Popconfirm title="你确定要删除这个分类吗?" onConfirm={() => handleDelete(record.categoryId)}>
+              <Button type={"primary"} key={"delete"} danger={true}>删 除</Button>
+            </Popconfirm>
           </Space>
         </a>)
     },
   ];
+
+  /** 删除分类 **/
+  const handleDelete = (key) => {
+      console.log("要删除的分类id为：" + key)
+  }
+
   const onCreate = (values) => {
     console.log('Received values of form: ', values);
     setVisible(false);
@@ -117,7 +111,7 @@ export default () => {
         <Form
           form={form}
           layout="vertical"
-          name="form_in_modal"
+          name="updateCategory"
           initialValues={{
             modifier: 'public',
           }}
@@ -132,7 +126,7 @@ export default () => {
               },
             ]}
           >
-            <Input defaultValue="程序人生" key={"categoryName"} disabled />
+            <Input defaultValue="程序人生" key={"categoryName"} disabled/>
           </Form.Item>
           <Form.Item name="description" label="分类描述信息"
                      rules={[
@@ -142,7 +136,7 @@ export default () => {
                        },
                      ]}
           >
-            <Input type="textarea" key={"description"} defaultValue="程序人生分类描述信息..." />
+            <Input type="textarea" key={"description"} defaultValue="程序人生分类描述信息..."/>
           </Form.Item>
           <Form.Item name="modifier" className="collection-create-form_last-form-item">
             <Radio.Group>
@@ -150,7 +144,7 @@ export default () => {
               <Radio value="private" key={"private"} disabled={true}>暂不生效</Radio>
             </Radio.Group>
             <Alert
-              style={{marginTop:15}}
+              style={{marginTop: 15}}
               message="分类一旦生效便无法更新生效状态！若分类尚未生效，则可以在此操作，更新分类状态为已生效！"
               type="warning"
             />
@@ -162,7 +156,8 @@ export default () => {
 
   return (
     <div>
-      <Table columns={columns} dataSource={categoryData.categoryList}/>
+      <Table columns={columns} dataSource={categoryData.data}
+             rowKey={(record) => record.categoryId}/>
       <CollectionCreateForm
         visible={visible}
         onCreate={onCreate}

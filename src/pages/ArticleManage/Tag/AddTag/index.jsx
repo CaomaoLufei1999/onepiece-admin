@@ -1,12 +1,26 @@
 import {Alert, Form, Input, Modal, Radio, Select} from "antd";
+import {getCategoryIds, getCategoryList} from "@/services/onepiece/onepiece-server";
 
-const { Option, OptGroup } = Select;
+const {Option} = Select;
+
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
-export default ({visible, onCreate, onCancel}) => {
+
+/** 获取文章分类id列表 **/
+const categoryIds = await getCategoryIds({});
+
+/** 渲染文章id列表到Select **/
+const options = categoryIds.data.map(item => {
+  return (
+    <Option key={item.category_id} value={item.category_id}>{item.category_name}</Option>
+  )
+})
+
+/** 新增标签组件 **/
+export default ({visible, handleSubmit, onCancel}) => {
   const [form] = Form.useForm();
-  return(
+  return (
     <Modal
       visible={visible}
       title="添加标签"
@@ -18,7 +32,7 @@ export default ({visible, onCreate, onCancel}) => {
           .validateFields()
           .then((values) => {
             form.resetFields();
-            onCreate(values);
+            handleSubmit(values);
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
@@ -28,62 +42,55 @@ export default ({visible, onCreate, onCancel}) => {
       <Form
         form={form}
         layout="vertical"
-        name="form_in_modal"
+        name="addTag"
         initialValues={{
           modifier: 'public',
         }}
       >
         <Form.Item
-          name="title"
+          name="tagName"
           label="标签标题"
           rules={[
             {
               required: true,
-              message: 'Please input the title of collection!',
+              message: '标签标题不可以为空!',
             },
           ]}
         >
-          <Input defaultValue="" placeholder={"请输入标签标题..."} />
+          <Input placeholder={"请输入标签标题..."}/>
         </Form.Item>
         <Form.Item
-          name="title"
+          name="categoryId"
           label="标签所属分类"
           rules={[
             {
               required: true,
-              message: 'Please input the title of collection!',
+              message: '标签所属分类不可以为空!',
             },
           ]}
         >
-          <Select defaultValue="程序人生" onChange={handleChange}>
-              <Option value="程序人生">程序人生</Option>
-              <Option value="前端">前端</Option>
-              <Option value="后端">后端</Option>
-              <Option value="数据库">数据库</Option>
-              <Option value="其他">其他</Option>
+          <Select onChange={handleChange}>
+            {options}
           </Select>
         </Form.Item>
-        <Form.Item name="description" label="标签描述信息"
+        <Form.Item name="status"
+                   label="标签状态"
                    rules={[
                      {
                        required: true,
-                       message: 'Please input the title of collection!',
+                       message: '标签状态不可以为空!',
                      },
-                   ]}
-        >
-          <Input type="textarea" placeholder="请输入标签描述信息..." />
-        </Form.Item>
-        <Form.Item name="modifier" className="collection-create-form_last-form-item">
-          <Radio.Group defaultValue={'private'}>
-            <Radio value="public" disabled={false}>立即生效</Radio>
-            <Radio value="private" disabled={false}>暂不生效</Radio>
+                   ]}>
+          <Radio.Group>
+            <Radio value="1" key={"effect"}>立即生效</Radio>
+            <Radio value="0" key={"un_effect"}>暂不生效</Radio>
           </Radio.Group>
-          <Alert
-            style={{marginTop:15}}
-            message="标签一旦生效便无法更新生效状态！若标签尚未生效，则可以在此操作，更新标签状态为已生效！"
-            type="warning"
-          />
         </Form.Item>
+        <Alert
+          style={{marginTop: 15}}
+          message="标签一旦生效便无法更新生效状态！若标签尚未生效，则可以在此操作，更新标签状态为已生效！"
+          type="warning"
+        />
       </Form>
     </Modal>
   );

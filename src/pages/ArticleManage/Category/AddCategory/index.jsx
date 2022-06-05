@@ -13,17 +13,23 @@ export default () => {
       // 提交新建分类请求
       const result = await addCategory({...values});
       console.log(result);
-      if (result.success === true) {
-        message.success("分类创建成功！刷新页面重新加载数据！")
+
+      if (result.success) {
+        console.log("success: " + result.code + ": " + result.msg)
+        message.success(result.code + ": 分类创建成功！请刷新页面重新加载数据！")
         // 清空表单
         form.resetFields();
-
-        // 页面跳转
-        if (!history) return;
-        const {query} = history.location;
-        const {redirect} = query;
-        history.push(redirect || '/admin/manage/category');
+      }else {
+        message.error(result.code + ": " + result.msg)
+        return;
       }
+
+      // 页面跳转
+      if (!history) return;
+      const {query} = history.location;
+      const {redirect} = query;
+      history.push(redirect || '/admin/manage/category');
+
     } catch (error) {
       console.log(error);
       const defaultAddCategoryFailureMessage = intl.formatMessage({
