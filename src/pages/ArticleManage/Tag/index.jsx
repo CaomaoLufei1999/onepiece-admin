@@ -4,10 +4,12 @@ import TagList from "@/pages/ArticleManage/Tag/TagList";
 import {useState} from "react";
 import AddTag from "@/pages/ArticleManage/Tag/AddTag";
 import {addTag} from "@/services/onepiece/onepiece-server";
+import {history, useIntl} from "umi";
 
 /** 标签管理 **/
 const TagManage = () => {
   const [visible, setVisible] = useState(false);
+  const intl = useIntl();
 
   /** 表单提交 **/
   const handleSubmit = async (values) => {

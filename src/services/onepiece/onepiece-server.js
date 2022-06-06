@@ -3,6 +3,14 @@
 /* eslint-disable */
 import {request} from 'umi';
 
+/** 删除标签 **/
+export async function deleteTag(tagId) {
+  console.log(tagId)
+  return request('/onepiece/tag/delete/' + tagId, {
+    method: 'POST',
+  });
+}
+
 /** 获取标签列表 **/
 export async function getTagList() {
   return request('/onepiece/tag/list', {

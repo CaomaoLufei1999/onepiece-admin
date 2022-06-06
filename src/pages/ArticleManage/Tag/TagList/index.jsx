@@ -1,6 +1,7 @@
-import {Table, Tag, Space, Button, Modal, Form, Input, Radio, Alert, Row, Col} from 'antd';
+import {Table, Tag, Space, Button, Modal, Form, Input, Radio, Alert, Row, Col, Popconfirm, message} from 'antd';
 import {useState} from "react";
-import {getTagList} from "@/services/onepiece/onepiece-server";
+import {addTag, deleteTag, getTagList} from "@/services/onepiece/onepiece-server";
+import {history, useIntl} from "umi";
 
 /** 获取标签列表 **/
 const tagData = await getTagList({});
@@ -8,6 +9,9 @@ const tagData = await getTagList({});
 /** 标签列表组件 **/
 export default () => {
   const [visible, setVisible] = useState(false);
+  /** 用于临时保存行数据 **/
+  const [recordTemp, setRecordTemp] = useState(null);
+  const intl = useIntl();
 
   const columns = [
     {
@@ -22,12 +26,12 @@ export default () => {
       key: 'categoryName',
       render: category => <Tag color={"red"}>{category}</Tag>,
     },
-    // {
-    //   title: '关联文章总数',
-    //   dataIndex: 'total',
-    //   key: 'total',
-    //   render: text => <a>{text}</a>,
-    // },
+    {
+      title: '关联文章总数',
+      dataIndex: 'total',
+      key: 'total',
+      render: text => <a>{text}</a>,
+    },
     {
       title: '标签状态',
       dataIndex: 'status',
@@ -49,23 +53,65 @@ export default () => {
     {
       title: '操作',
       key: 'action',
-      render: () => (
+      render: (_, record) => (
         <a onClick={e => e.preventDefault()}>
           <Space>
             <Button type={"primary"} key={"update"} onClick={() => {
+              /** 临时行数据 **/
+              setRecordTemp(record);
               setVisible(true);
             }}>修 改</Button>
-            <Button type={"primary"} key={"delete"} danger={true}>删 除</Button>
+            <Popconfirm title="你确定要删除这个分类吗?" onConfirm={() => handleDelete(record.tagId)}>
+              <Button type={"primary"} key={"delete"} danger={true}>删 除</Button>
+            </Popconfirm>
           </Space>
         </a>)
     },
   ];
-  const onCreate = (values) => {
-    console.log('Received values of form: ', values);
-    setVisible(false);
-  };
 
-  const CollectionCreateForm = ({visible, onCreate, onCancel}) => {
+  /** 删除标签 **/
+  const handleDelete = async (tagId) => {
+    try {
+      /** 删除标签 **/
+      const result = await deleteTag(tagId);
+      if (result.success) {
+        message.success(result.code + ": 标签删除成功！请刷新页面重新加载数据！")
+        // 页面刷新
+        window.location.reload()
+      } else {
+        message.error(result.code + ": " + result.msg)
+      }
+    } catch (error) {
+      const defaultAddCategoryFailureMessage = intl.formatMessage({
+        id: 'pages.form.error',
+        defaultMessage: '表单提交失败',
+      });
+      message.error(defaultAddCategoryFailureMessage);
+    }
+  }
+
+  /** 修改标签 **/
+  const handlUpdate = async (tagId) => {
+    try {
+      /** 删除标签 **/
+      const result = await deleteTag(tagId);
+      if (result.success) {
+        message.success(result.code + ": 标签删除成功！请刷新页面重新加载数据！")
+        // 页面刷新
+        window.location.reload()
+      } else {
+        message.error(result.code + ": " + result.msg)
+      }
+    } catch (error) {
+      const defaultAddCategoryFailureMessage = intl.formatMessage({
+        id: 'pages.form.error',
+        defaultMessage: '表单提交失败',
+      });
+      message.error(defaultAddCategoryFailureMessage);
+    }
+  }
+
+  const CollectionCreateForm = ({visible, handlUpdate, onCancel}) => {
     const [form] = Form.useForm();
     return (
       <Modal
@@ -150,7 +196,7 @@ export default () => {
              rowKey={(record) => record.tagId}/>
       <CollectionCreateForm
         visible={visible}
-        onCreate={onCreate}
+        handlUpdate={handlUpdate}
         onCancel={() => {
           setVisible(false);
         }}
