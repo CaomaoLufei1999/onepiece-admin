@@ -11,7 +11,7 @@ import { useIntl, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
-import { getQrcodeTicket,getQQLoginUrl } from '@/services/onepiece/onepiece-server';
+import {getQrcodeTicket, getQQLoginUrl, getWeChatLoginUrl} from '@/services/onepiece/onepiece-server';
 
 import styles from './index.less';
 
@@ -28,6 +28,7 @@ const LoginMessage = ({ content }) => (
 
 const qrcodeTicket = await getQrcodeTicket({});
 const qqLoginUrl = await getQQLoginUrl({});
+const weChatLoginUrl = await getWeChatLoginUrl({});
 
 const Login = () => {
   const [userLoginState, setUserLoginState] = useState({});
@@ -93,7 +94,7 @@ const Login = () => {
         banner
         message={
           <Marquee pauseOnHover gradient={false}>
-            优先推荐大家使用QQ扫码授权登录（也可以使用微信公众号授权），QQ登录自动授权注册之后，可以在个人设置页绑定自己的手机号和账号密码，之后方可通过账号密码或者手机短信认证的方式进行登录！
+            优先推荐大家使用QQ/微信扫码授权登录（也可以使用微信公众号授权），QQ/微信登录自动授权注册之后，可以在个人设置页绑定自己的手机号和账号密码，之后方可通过账号密码或者手机短信认证的方式进行登录！
           </Marquee>
         }
       />
@@ -116,8 +117,11 @@ const Login = () => {
               id="pages.login.loginWith"
               defaultMessage="其他登录方式"
             />,
-            <a key={"wechat"} style={{marginLeft:5,marginRight:5}}>
-              <img src={"https://open.weixin.qq.com/zh_CN/htmledition/res/assets/res-design-download/icon24_appwx_logo.png"} onClick={showModal} />
+            <a key={"mq-wechat"} style={{marginLeft:5,marginRight:5}}>
+              <img src={"http://csp-aliyun-oos01.oss-cn-beijing.aliyuncs.com/onepiece/2022/06/08/722b1741-fdec-409a-9027-209582ba3490.png"} onClick={showModal} />
+            </a>,
+            <a key={"open-wechat"} style={{marginRight:5}} href={weChatLoginUrl}>
+              <img src={"https://open.weixin.qq.com/zh_CN/htmledition/res/assets/res-design-download/icon24_appwx_logo.png"}/>
             </a>,
             <a href={qqLoginUrl} key={"qq"}><img src={"https://wiki.connect.qq.com/wp-content/uploads/2021/01/bt_white_24X24.png"} /></a>,
           ]}

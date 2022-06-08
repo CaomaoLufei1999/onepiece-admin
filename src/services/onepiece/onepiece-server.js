@@ -3,6 +3,13 @@
 /* eslint-disable */
 import {request} from 'umi';
 
+/** 向后端索要微信登录授权链接地址url **/
+export async function getWeChatLoginUrl() {
+  return request('/onepiece/open-wechat/getLoginUrl', {
+    method: 'GET',
+  });
+}
+
 /** 删除标签 **/
 export async function deleteTag(tagId) {
   console.log(tagId)
